@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logout</title>
+    <script>
+        function logout() {
+            // Clear the session storage to log out the user
+            sessionStorage.removeItem('authenticated');
+            // Redirect to the login page
+            window.location.href = 'login.html';
+        }
+        // Call the logout function when the page loads
+        window.onload = logout;
+    </script>
+</head>
+<body>
+    <p>Logging out...</p>
+</body>
+</html>

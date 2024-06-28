@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="styles1.css">
+    <script>
+        function login(event) {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const rememberMe = document.getElementById('rememberMe').checked;
+
+            // Simple client-side validation
+            if (username.trim() === '' || password.trim() === '') {
+                alert('Please fill in all fields.');
+                return;
+            }
+
+            // Basic authentication logic (for demonstration purposes)
+            if (username === 'user' && password === 'password') {
+                if (rememberMe) {
+                    localStorage.setItem('rememberedUsername', username);
+                } else {
+                    localStorage.removeItem('rememberedUsername');
+                }
+                sessionStorage.setItem('authenticated', 'true');
+                window.location.href = 'index.html';
+            } else {
+                alert('Invalid credentials');
+            }
+        }
+
+        function loadRememberedUsername() {
+            const rememberedUsername = localStorage.getItem('rememberedUsername');
+            if (rememberedUsername) {
+                document.getElementById('username').value = rememberedUsername;
+                document.getElementById('rememberMe').checked = true;
+            }
+        }
+    </script>
+</head>
+<body onload="loadRememberedUsername()">
+    <div class="wrapper">
+        <form onsubmit="login(event)">
+            <h1>Login</h1>
+            <div class="input-box">
+                <input type="text" id="username" placeholder="Username" required>
+                <i class='bx bxs-user'></i>
+            </div>
+            <div class="input-box">
+                <input type="password" id="password" placeholder="Password" required>
+                <i class='bx bxs-lock-alt'></i>
+            </div>
+            <div class="remember-forgot">
+                <label><input type="checkbox" id="rememberMe">Remember me</label>
+                <a href="forgot-password.html">Forgot password?</a>
+            </div>
+            <button type="submit" class="btn">Login</button>
+            <div class="register-link">
+                <p>Don't have an account? <a href="register.html">Register</a></p>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

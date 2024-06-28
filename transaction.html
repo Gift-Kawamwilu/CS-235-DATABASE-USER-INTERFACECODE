@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transaction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-radius: 5px;
+            text-align: center;
+        }
+        h2 {
+            margin-bottom: 20px;
+        }
+        .btn {
+            display: inline-block;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+    
+</head>
+<body>
+    <div class="left-content">
+        <ul class="navigation">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="movies.html" >Movies</a></li>
+            <li><a href="news.html">News</a></li>
+        </ul>
+    </div>
+    <div class="container">
+        <h2>Transaction Details</h2>
+        <div id="transaction-details">
+            <!-- Transaction details will be dynamically displayed here -->
+        </div>
+        <a href="rent-movie.html" class="btn">Rent Another Movie</a>
+    </div>
+
+    <script>
+        function getQueryParams() {
+            const params = {};
+            window.location.search.substring(1).split('&').forEach(pair => {
+                const [key, value] = pair.split('=');
+                params[decodeURIComponent(key)] = decodeURIComponent(value);
+            });
+            return params;
+        }
+
+        function displayTransactionDetails() {
+            const params = getQueryParams();
+            const method = params['method'];
+            const provider = params['provider'];
+            const transactionDetails = document.getElementById('transaction-details');
+            
+            transactionDetails.innerHTML = `
+                <p>Payment Method: <strong>${method}</strong></p>
+                ${method === 'Mobile Payment' ? `<p>Provider: <strong>${provider}</strong></p>` : ''}
+                <p>Transaction status: <strong>Success</strong></p>
+            `;
+        }
+
+        window.onload = displayTransactionDetails;
+    </script>
+</body>
+</html>

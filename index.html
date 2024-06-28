@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rent A Movie</title>
+    <!-- Combined stylesheets -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style2.css">
+    <!-- In index.html or relevant page -->
+<li id="adminPanelLink" class="nav-link hidden"><a href="admin.html" class="nav-link">Admin Panel</a></li>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Check authentication and user type on each page load
+            if (!sessionStorage.getItem('authenticated')) {
+                window.location.href = 'login.html'; // Redirect if not authenticated
+            }
+
+            var userType = sessionStorage.getItem('userType');
+            if (userType === 'employee') {
+                document.body.classList.add('employee-view'); // Apply styles for employee view
+                document.querySelector('.employee-section').classList.remove('hidden'); // Show employee section
+                document.getElementById('adminPanelLink').classList.remove('hidden'); // Show admin panel link
+            } else {
+                // Default: Customer view
+                document.querySelector('.customer-section').classList.remove('hidden'); // Show customer section
+            }
+        });
+    </script>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1 class="logo">Rent A Movie</h1>
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li><a href="index.html" class="nav-link active">Home</a></li>
+                    <li><a href="movies.html" class="nav-link">Movies</a></li>
+                    <li><a href="news.html" class="nav-link">News</a></li>
+                    <li><a href="logout.html" class="nav-link">Logout</a></li>
+                    <!-- Additional navigation for employees -->
+                    <li id="adminPanelLink" class="nav-link hidden"><a href="admin.html" class="nav-link">Admin Panel</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <!-- Customer view content -->
+        <section class="customer-section hidden">
+            <div class="container">
+                <h2>Welcome Customer!</h2>
+                <p>Explore our collection of movies and enjoy renting online.</p>
+                
+            </div>
+       
+
+        <!-- Hero section (common for both views) -->
+        <section class="hero">
+            <div class="container">
+                <h2 class="hero-title">Discover the Best Movies to Rent</h2>
+                <p class="hero-description">Find your favorite movies and rent them online.</p>
+                <a href="movies.html" class="btn">Browse Movies</a>
+            </div>
+        </section>
+
+        <!-- Features section (common for both views) -->
+        <section class="features">
+            <div class="container">
+                <h2 class="section-title">Why Choose Us?</h2>
+                <div class="feature-list">
+                    <div class="feature-item">
+                        <img src="C:\Users\ALEX\Downloads\rent-movie\movie rent\frontend\IMAGES AND VIDEOS\download.png" alt="Wide Selection" class="feature-icon">
+                        <h3 class="feature-title">Wide Selection</h3>
+                        <p class="feature-description">Choose from a wide range of movies across various genres.</p>
+                    </div>
+                    <div class="feature-item">
+                        <img src="C:\Users\ALEX\Downloads\rent-movie\movie rent\frontend\IMAGES AND VIDEOS\download (1).png" alt="High Quality" class="feature-icon">
+                        <h3 class="feature-title">High Quality</h3>
+                        <p class="feature-description">Enjoy movies in high definition quality.</p>
+                    </div>
+                    <div class="feature-item">
+                        <img src="C:\Users\ALEX\Downloads\rent-movie\movie rent\frontend\IMAGES AND VIDEOS\images.png"alt="Easy Rentals" class="feature-icon">
+                        <h3 class="feature-title">Easy Rentals</h3>
+                        <p class="feature-description">Rent movies with a simple and user-friendly process.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p class="footer-text">&copy; 2024 Rent A Movie. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

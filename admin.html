@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Rent A Movie</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style2.css">
+    <style>
+        /* Additional styles specific to admin.html */
+        .admin-section {
+            padding: 60px 0;
+            text-align: center;
+        }
+        .admin-section h2 {
+            font-size: 36px;
+            margin-bottom: 30px;
+            color: #333;
+        }
+        .admin-section p {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 40px;
+        }
+        .admin-options {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .admin-option {
+            flex: 0 0 calc(33.33% - 20px);
+            max-width: calc(33.33% - 20px);
+            margin: 10px;
+            background-color: #f0f0f0;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            text-align: center;
+        }
+        .admin-option:hover {
+            transform: translateY(-5px);
+        }
+        .admin-option a {
+            text-decoration: none;
+            color: #333;
+            font-size: 18px;
+            display: block;
+            padding: 10px 0;
+        }
+        .login-form {
+            max-width: 400px;
+            margin: 0 auto;
+            background-color: #f0f0f0;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+        }
+        .login-form h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .form-group button {
+            width: 100%;
+            padding: 12px;
+            font-size: 18px;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .form-group button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    
+    <header class="header">
+        <div class="container">
+            <h1 class="logo">Rent A Movie Admin Panel</h1>
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <li><a href="movies.html" class="nav-link">Movies</a></li>
+                    <li><a href="news.html" class="nav-link">News</a></li>
+                    <li><a href="logout.html" class="nav-link">Logout</a></li>
+                    <li><a href="admin.html" class="nav-link active">Admin Panel</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <section class="admin-section">
+            <div class="container">
+                <div class="login-form" id="loginForm">
+                    <h2>Login as Employee</h2>
+                    <form onsubmit="return login(event);">
+                        <div class="form-group">
+                            <label for="username">Username:</label>
+                            <input type="text" id="username" name="username" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password:</label>
+                            <input type="password" id="password" name="password" required>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit">Login</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="admin-options" id="adminOptions" style="display: none;">
+                    <div class="admin-option">
+                        <a href="#" onclick="showAddCustomerForm();">Enter new customers with automatic city/state lookup</a>
+                    </div>
+                    <div class="admin-option">
+                        <a href="#" onclick="showSearchCustomerForm();">Search for customers by last name or phone number</a>
+                    </div>
+                    <div class="admin-option">
+                        <a href="#">Keep track of movie rentals, prices, and dates</a>
+                    </div>
+                    <div class="admin-option">
+                        <a href="#" onclick="showSendLetterForm();">Send personalized letters to customers</a>
+                    </div>
+                    <div class="admin-option">
+                        <a href="#" onclick="showAddMovieForm();">Add a new movie</a>
+                    </div>
+                    <div class="admin-option">
+                        <a href="#">Search for movies by actor</a>
+                    </div>
+                </div>
+                
+                <div id="adminForms" style="display: none;">
+                    <!-- Add Customer Form -->
+                    <div class="form-section" id="addCustomerForm" style="display: none;">
+                        <h3>Add New Customer</h3>
+                        <form onsubmit="return addCustomer(event);">
+                            <div class="form-group">
+                                <label for="firstName">First Name:</label>
+                                <input type="text" id="firstName" name="firstName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastName">Last Name:</label>
+                                <input type="text" id="lastName" name="lastName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="phoneNumber">Phone Number:</label>
+                                <input type="text" id="phoneNumber" name="phoneNumber">
+                            </div>
+                            <div class="form-group">
+                                <label for="streetAddress">Street Address:</label>
+                                <input type="text" id="streetAddress" name="streetAddress">
+                            </div>
+                            <div class="form-group">
+                                <label for="state">State:</label>
+                                <input type="text" id="state" name="state">
+                            </div>
+                            <div class="form-group">
+                                <label for="zipcode">Zipcode:</label>
+                                <input type="text" id="zipcode" name="zipcode" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="city">City:</label>
+                                <input type="text" id="city" name="city">
+                            </div>
+                            <div class="form-group">
+                                <button type="submit">Add Customer</button>
+                            </div>
+                        </form>
+                    </div>
+                    
+                    <!-- Search Customer Form -->
+                    <div class="form-section" id="searchCustomerForm" style="display: none;">
+                        <h3>Search Customer</h3>
+                        <form onsubmit="return searchCustomer(event);">
+                            <div class="form-group">
+                                <label for="searchValue">Enter Last Name or Phone Number:</label>
+                                <input type="text" id="searchValue" name="searchValue" required>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit">Search</button>
+                            </div>
+                        </form>
+                    </div>
+                    
+                    <!-- Add Movie Form -->
+                    <div class="form-section" id="addMovieForm" style="display: none;">
+                        <h3>Add New Movie</h3>
+                        <form onsubmit="return addMovie(event);">
+                            <div class="form-group">
+                                <label for="movieType">Movie Type:</label>
+                                <input type="text" id="movieType" name="movieType" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="movieName">Movie Name:</label>
+                                <input type="text" id="movieName" name="movieName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="moviePrice">Movie Price:</label>
+                                <input type="text" id="moviePrice" name="moviePrice" required>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit">Add Movie</button>
+                            </div>
+                        </form>
+                    </div>
+                    
+                    <!-- Send Letter Form -->
+                    <div class="form-section" id="sendLetterForm" style="display: none;">
+                        <h3>Send Personalized Letter</h3>
+                        <form onsubmit="return sendLetter(event);">
+                            <div class="form-group">
+                                <label for="customerName">Customer Name:</label>
+                                <input type="text" id="customerName" name="customerName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="message">Message:</label>
+                                <textarea id="message" name="message" rows="4" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit">Send Letter</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p class="footer-text">&copy; 2024 Rent A Movie. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        function login(event) {
+            event.preventDefault(); // Prevent form submission
+
+            // Replace with actual authentication logic
+            var username = document.getElementById('username').value;
+            var password = document.getElementById('password').value;
+
+            // Simulate successful authentication (replace with backend verification)
+            if (username === 'admin' && password === 'password') {
+                // Set session variables (simulate sessionStorage usage)
+                sessionStorage.setItem('authenticated', true);
+                sessionStorage.setItem('userType', 'employee');
+
+                // Show admin options and hide login form
+                document.getElementById('loginForm').style.display = 'none';
+                document.getElementById('adminOptions').style.display = 'flex';
+            } else {
+                alert('Invalid username or password. Please try again.');
+            }
+        }
+
+        function showAddCustomerForm() {
+            document.getElementById('adminForms').style.display = 'block';
+            document.getElementById('addCustomerForm').style.display = 'block';
+            document.getElementById('searchCustomerForm').style.display = 'none';
+            document.getElementById('addMovieForm').style.display = 'none';
+            document.getElementById('sendLetterForm').style.display = 'none'; // Hide send letter form
+        }
+
+        function showSearchCustomerForm() {
+            document.getElementById('adminForms').style.display = 'block';
+            document.getElementById('addCustomerForm').style.display = 'none';
+            document.getElementById('searchCustomerForm').style.display = 'block';
+            document.getElementById('addMovieForm').style.display = 'none';
+            document.getElementById('sendLetterForm').style.display = 'none'; // Hide send letter form
+        }
+
+        function showAddMovieForm() {
+            document.getElementById('adminForms').style.display = 'block';
+            document.getElementById('addCustomerForm').style.display = 'none';
+            document.getElementById('searchCustomerForm').style.display = 'none';
+            document.getElementById('addMovieForm').style.display = 'block';
+            document.getElementById('sendLetterForm').style.display = 'none'; // Hide send letter form
+        }
+
+        function showSendLetterForm() {
+            document.getElementById('adminForms').style.display = 'block';
+            document.getElementById('addCustomerForm').style.display = 'none';
+            document.getElementById('searchCustomerForm').style.display = 'none';
+            document.getElementById('addMovieForm').style.display = 'none';
+            document.getElementById('sendLetterForm').style.display = 'block'; // Show send letter form
+        }
+
+        function addCustomer(event) {
+            event.preventDefault();
+            // Gather form data
+            var formData = {
+                firstName: document.getElementById('firstName').value,
+                lastName: document.getElementById('lastName').value,
+                phoneNumber: document.getElementById('phoneNumber').value,
+                streetAddress: document.getElementById('streetAddress').value,
+                state: document.getElementById('state').value,
+                zipcode: document.getElementById('zipcode').value,
+                city: document.getElementById('city').value,
+            };
+            // Simulate adding customer (replace with AJAX call)
+            console.log('Adding customer:', formData);
+            alert('Customer added successfully!');
+        }
+
+        function searchCustomer(event) {
+            event.preventDefault();
+            // Gather form data
+            var searchValue = document.getElementById('searchValue').value;
+            // Simulate searching customer (replace with AJAX call)
+            console.log('Searching for customer with value:', searchValue);
+            alert('Customer search initiated!');
+        }
+
+        function addMovie(event) {
+            event.preventDefault();
+            // Gather form data
+            var formData = {
+                movieType: document.getElementById('movieType').value,
+                movieName: document.getElementById('movieName').value,
+                moviePrice: document.getElementById('moviePrice').value,
+            };
+            // Simulate adding movie (replace with AJAX call)
+            console.log('Adding movie:', formData);
+            alert('Movie added successfully!');
+        }
+
+        function sendLetter(event) {
+            event.preventDefault();
+            
+            var customerName = document.getElementById('customerName').value;
+            var message = document.getElementById('message').value;
+            
+            // Simulate sending letter (replace with actual sending logic)
+            console.log(`Sending letter to ${customerName}: ${message}`);
+            alert(`Letter sent successfully to ${customerName}!`);
+            
+            // Reset form fields
+            document.getElementById('customerName').value = '';
+            document.getElementById('message').value = '';
+        }
+
+        document.getElementById('zipcode').addEventListener('blur', function() {
+            var zipcode = this.value;
+            if (zipcode.length === 5 && !isNaN(zipcode)) {
+                fetch(`https://api.zippopotam.us/us/${zipcode}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.places && data.places.length > 0) {
+                            document.getElementById('city').value = data.places[0]['place name'];
+                            document.getElementById('state').value = data.places[0]['state abbreviation'];
+                        } else {
+                            alert('Invalid ZIP code');
+                        }
+                    })
+                    .catch(error => console.error('Error fetching ZIP code data:', error));
+            }
+        });
+    </script>
+</body>
+</html>
+
+

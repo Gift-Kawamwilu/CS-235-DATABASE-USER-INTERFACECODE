@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RentAMovie</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <section class="top-bar">
+        <div class="left-content">
+            <h2 class="title">MOVIES 4 YOU</h2>
+        </div>
+        <div class="right-content">
+            <ul class="navigation">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="news.html">News</a></li>
+            </ul>
+        </div>
+    </section>
+    <section class="main-container">
+        <div class="sidebar">
+            <form id="filter-form">
+                <div class="sidebar-groups">
+                    <h3 class="sg-title">Categories</h3>
+                    <input type="checkbox" id="adventure" name="categories" value="adventure">
+                    <label for="adventure">Adventure</label><br>
+                    <input type="checkbox" id="action" name="categories" value="action">
+                    <label for="action">Action</label><br>
+                    <input type="checkbox" id="animation" name="categories" value="animation">
+                    <label for="animation">Animation</label><br>
+                    <input type="checkbox" id="comedy" name="categories" value="comedy">
+                    <label for="comedy">Comedy</label><br>
+                    <input type="checkbox" id="sci-fi" name="categories" value="sci-fi">
+                    <label for="sci-fi">Sci-fi</label><br>
+                    <input type="checkbox" id="history" name="categories" value="history">
+                    <label for="history">History</label><br>
+                    <input type="checkbox" id="thriller" name="categories" value="thriller">
+                    <label for="thriller">Thriller</label><br>
+                    <input type="checkbox" id="horror" name="categories" value="horror">
+                    <label for="horror">Horror</label><br>
+                    <input type="checkbox" id="documentary" name="categories" value="documentary">
+                    <label for="documentary">Documentary</label><br>
+                </div>
+                <div class="sidebar-groups">
+                    <h3 class="sg-title">Language</h3>
+                    <input type="checkbox" id="english" name="languages" value="english">
+                    <label for="english">English</label><br>
+                    <input type="checkbox" id="spanish" name="languages" value="spanish">
+                    <label for="spanish">Spanish</label><br>
+                    <input type="checkbox" id="hindi" name="languages" value="hindi">
+                    <label for="hindi">Hindi</label><br>
+                </div>
+                <div class="sidebar-groups">
+                    <h3 class="sg-title">Time</h3>
+                    <input type="radio" id="morning" name="time" value="morning">
+                    <label for="morning">Morning</label><br>
+                    <input type="radio" id="night" name="time" value="night">
+                    <label for="night">Night</label><br>
+                </div>
+                <div class="sidebar-groups">
+                    <button type="submit" class="btn">Apply Filters</button>
+                </div>
+            </form>
+        </div>
+        <div class="movie-container" id="movie-container">
+            <div class="upcoming-img-box">
+                <!-- Video player will be inserted here dynamically -->
+                <div id="video-player"></div>
+                <div class="buttons">
+                    <a href="rent-movie.html" class="btn">Rent Now</a>
+                    <a href="#" class="btn-alt btn" onclick="playTrailer()">Play Trailer</a>
+                </div>
+            </div>
+            <div class="current-movies" id="current-movies">
+                <!-- Movies will be dynamically inserted here -->
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Movies data
+        const movies = [
+            {
+                title: "Jurassic Park",
+                screen: "Platinum",
+                price: 12,
+                categories: ["adventure", "sci-fi"],
+                languages: ["english"],
+                time: ["morning", "night"],
+                video: "C:/Users/ALEX/Downloads/rent-movie/movie rent/frontend/IMAGES AND VIDEOS/bad boys.mp4",
+                img: "C:/Users/ALEX/Downloads/rent-movie/movie rent/frontend/IMAGES AND VIDEOS/Jurassic World 3 Wallpaper - iXpap.jpg"
+            },
+            {
+                title: "Harry Porter",
+                screen: "Gold",
+                price: 15,
+                categories: ["adventure", "action"],
+                languages: ["english"],
+                time: ["morning"],
+                video: "C:/Users/ALEX//Downloads/WEBSITE/IMAGES AND VIDEOS/bad boys.mp4",
+                img: "C:/Users/ALEX/Downloads/rent-movie/movie rent/frontend/IMAGES AND VIDEOS/Harry porter.jpg"
+            },
+            {
+                title: "Kungfu Panda",
+                screen: "Silver",
+                price: 14,
+                categories: ["animation", "comedy"],
+                languages: ["english"],
+                time: ["night"],
+                video: "C:/Users/ALEX/Downloads/WEBSITE/IMAGES AND VIDEOS/bad boys.mp4",
+                img: "C:/Users/ALEX/Downloads/rent-movie/movie rent/frontend/IMAGES AND VIDEOS/kunfu panda.jpg"
+            }
+            
+
+        ];
+
+        // Function to display movies
+        function displayMovies(filteredMovies) {
+            const movieContainer = document.getElementById('current-movies');
+            movieContainer.innerHTML = ''; // Clear current movies
+
+            filteredMovies.forEach(movie => {
+                const movieElement = document.createElement('div');
+                movieElement.classList.add('current-movie');
+                
+                movieElement.innerHTML = `
+                    <div class="cm-img-box">
+                        <img src="${movie.img}" alt="${movie.title}">
+                    </div>
+                    <h3 class="movie-title">${movie.title}</h3>
+                    <p class="screen-name">Screen: ${movie.screen}</p>
+                    <div class="renting">
+                        <h2 class="price">K${movie.price}</h2>
+                        <a href="rent-movie.html" class="btn">Rent Movie</a>
+                    </div>
+                `;
+
+                movieContainer.appendChild(movieElement);
+            });
+        }
+
+        // Function to play trailer
+        function playTrailer() {
+            const videoPlayerDiv = document.getElementById('video-player');
+            const videoPlayer = document.createElement('video');
+            videoPlayer.setAttribute('controls', true);
+            videoPlayer.setAttribute('autoplay', true);
+            videoPlayer.setAttribute('loop', true);
+            videoPlayer.style.width = '100%';
+            videoPlayer.style.height = 'auto';
+            videoPlayer.innerHTML = `
+                <source src="${movies[0].video}" type="video/mp4">
+                Your browser does not support the video tag.
+            `;
+            videoPlayerDiv.innerHTML = ''; // Clear previous video player
+            videoPlayerDiv.appendChild(videoPlayer);
+        }
+
+        // Initial display of all movies
+        displayMovies(movies);
+
+        document.getElementById('filter-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // Get selected categories
+            const selectedCategories = Array.from(document.querySelectorAll('input[name="categories"]:checked'))
+                .map(checkbox => checkbox.value);
+
+            // Get selected languages
+            const selectedLanguages = Array.from(document.querySelectorAll('input[name="languages"]:checked'))
+                .map(checkbox => checkbox.value);
+
+            // Get selected time
+            const selectedTime = document.querySelector('input[name="time"]:checked')?.value;
+
+            // Filter movies based on selected filters
+            const filteredMovies = movies.filter(movie => {
+                const matchCategory = selectedCategories.length === 0 || selectedCategories.some(category => movie.categories.includes(category));
+                const matchLanguage = selectedLanguages.length === 0 || selectedLanguages.some(language => movie.languages.includes(language));
+                const matchTime = !selectedTime || movie.time.includes(selectedTime);
+                return matchCategory && matchLanguage && matchTime;
+            });
+
+            // Display filtered movies
+            displayMovies(filteredMovies);
+        });
+    </script>
+</body>
+</html>
